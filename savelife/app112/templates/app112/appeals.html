@@ -1,0 +1,29 @@
+{% extends 'app112/base.html' %}
+<!-- 4. Вывести список всех происшествий, а также назнач. служб в виде подсписка, если они отсутствуют,то сообщить
+ (ofr, if-else, empty)-->
+<!-- 7. б)Создать шаблон для детал отображ данных происшествий -->
+<!-- 10. Изменить шаблон списка обращений -->
+{% block content %}
+<h1>Список обращений</h1>
+{% for appeal in data_appeals %}
+<div>
+    <hr>
+    <h3>Номер обращения: {{appeal.number}}</h3>
+    <p>Дата: {{appeal.date|date:"d.m.Y"}}</p>
+    <p>Время: {{appeal.date|time}}</p>
+    <p>С момента создания прошло: {{appeal.date|timesince}}</p>
+    <p>Статус: {{appeal.status}}</p>
+    <p>Не звонить: {{appeal.id_inc.dontCall|yesno}}</p>
+    <p>Список служб:
+        {% for i in appeal.service.all %}
+            {{i|join:', '|upper}}
+        {% empty %}
+            Отсутствуют
+        {% endfor %}
+    </p>
+    <p><a href="{% url 'app112:edit_appeal' appeal.id %}">Редактировать</a></p>
+</div>
+{% endfor %}
+<hr>
+<p>Всего обращений: {{data_appeals|length}}</p>
+{% endblock %}

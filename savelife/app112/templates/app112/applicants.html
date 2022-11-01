@@ -1,0 +1,23 @@
+{% extends 'app112/base.html' %}
+<!-- 3. Вывести список всех пользователей (for)-->
+<!-- 5. Пронумеровать список заявителей, визуально выделить первую и последнюю записи -->
+{% block content %}
+<h1>Список заявителей</h1>
+    {% for i in applicants %}
+        {% if forloop.first %}
+            <div align="center" style="border: 5px solid green; padding:10px">
+        {% elif forloop.last %}
+            <div align="center" style="border: 5px solid red; padding:10px">
+        {% endif %}
+                <div align="center">
+                    <h1>Запись № {{forloop.counter}}</h1>
+                    <p>ID заявителя: {{i.id}}</p>
+                    <p>Фамилия: {{i.surname}}</p>
+                    <p>Имя: {{i.name}}</p>
+                    <p><a href="{% url 'app112:get_applicant' i.pk %}">Подробнее...</a></p>
+                </div>
+            </div>
+            <hr>
+
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,40 @@
+<!-- 1. Создать базовый шаблон, от которого будут наследоваться все последю шаблоны -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block mainmenu %}
+<!-- 2. Добавить ссылки на представления, созданные в предыдущих заданиях-->
+<div style="display: flex">
+    <div>
+    <ul>
+        <li><a href="{% url 'app112:home' %}">Главная</a></li>
+    </ul>
+    </div>
+    <div>
+    <ul>
+        <li><a href="{% url 'app112:create_applicant' %}">Добавить заявителя</a></li>
+        <li><a href="{% url 'app112:create_appeal' %}">Добавить обращение</a></li>
+        <li><a href="{% url 'app112:create_service' %}">Добавить экстренную службу</a></li>
+    </ul>
+    </div>
+    <div>
+    <ul>
+        <li><a href="{% url 'app112:applicants' %}">Все заявители</a></li>
+        <li><a href="{% url 'app112:appeals' %}">Все обращения</a></li>
+        <li><a href="{% url 'app112:redirect' %}">Пример перенаправления - ссылка на /redirect/</a></li>
+    </ul>
+    </div>
+</div>
+    <hr>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% include 'app112/footer.html' %}
+</body>
+</html>

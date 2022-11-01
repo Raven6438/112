@@ -1,0 +1,13 @@
+{% extends 'app112/base.html' %}
+<!-- 7. а)Созд шабл для детал отображ данных заявителя -->
+<!-- 8. Измен шаблон отображ данных заяв -->
+{% block content %}
+<h1> Данные о заявителе: ID {{applicant.id}}</h1>
+<p><b>Фамилия:</b> {{applicant.surname|lower|capfirst}}</p>
+<p><b>Имя:</b> {{applicant.name|lower|capfirst}}</p>
+<p><b>Отчество:</b> {{applicant.patronymic|lower|capfirst|default:'-'}}</p>
+<p><b>Пол:</b> {{applicant.gender|capfirst}}</p>
+<p><b>День рождения:</b> {{applicant.birthday|date|default:'-'}}</p>
+<p><b>Телефон:</b> {{applicant.phone|default:'-'}}</p>
+<p><a href="{% url 'app112:edit_applicant' applicant.id %}">Редактировать</a></p>
+{% endblock %}
