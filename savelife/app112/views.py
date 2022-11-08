@@ -1,7 +1,9 @@
 from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.views.generic import ListView, CreateView, UpdateView
+from django_filters.views import FilterView
 
+from .filters import ApplicantFilter, AppealFilter
 from .forms import *
 from app112 import models
 
@@ -14,11 +16,12 @@ def for_base_temp(request):
     return render(request, 'app112/base.html', {'title': 'Главная страница'})
 
 
-class Appeals(ListView):
+class Appeals(FilterView, ListView):
     model = models.Appeal
     template_name = 'app112/appeals.html'
-    context_object_name = 'data_appeals'
+    #context_object_name = 'data_appeals'
     extra_context = {'title': 'Обращения'}
+    filterset_class = AppealFilter
 
 
 """def appeals(request):
@@ -35,9 +38,11 @@ def get_applicant(request, pk):
 
 def get_applicants(request):
     applicants = Applicant.objects.order_by('id').all()
+    f = ApplicantFilter(request.GET, queryset=applicants)
     context = {
-        'applicants': applicants,
-        'title': 'Все заявители'
+        #'applicants': applicants,
+        'title': 'Все заявители',
+        'filter': f
     }
     return render(request, 'app112/applicants.html', context=context)
 

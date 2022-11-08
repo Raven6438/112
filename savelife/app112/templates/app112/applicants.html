@@ -2,6 +2,30 @@
 <!-- 3. Вывести список всех пользователей (for)-->
 <!-- 5. Пронумеровать список заявителей, визуально выделить первую и последнюю записи -->
 {% block content %}
+<div align="center">
+    <h2>Поиск</h2>
+        <form method="GET">
+            {% csrf_token %}
+            {{ filter.form.as_p }}
+            <button type="submit">Найти</button>
+        </form>
+    <hr>
+        {% if filter.qs.count > 1 %}
+            <h1>Список заявителей</h1>
+        {% else %}
+            <h1>Результат поиска</h1>
+        {% endif %}
+        {% for obj in filter.qs %}
+            <h2>ID заявителя: {{obj.id}}</h2>
+            <p>Фамилия: {{obj.surname}}</p>
+            <p>Имя: {{obj.name}}</p>
+            <p><a href="{% url 'app112:get_applicant' obj.pk %}">Подробнее...</a></p><hr>
+        {% empty %}
+            <h3>Ничего не найдено</h3>
+        {% endfor %}
+    </div>
+<hr>
+<!--
 <h1>Список заявителей</h1>
     {% for i in applicants %}
         {% if forloop.first %}
@@ -21,3 +45,4 @@
 
     {% endfor %}
 {% endblock %}
+-->

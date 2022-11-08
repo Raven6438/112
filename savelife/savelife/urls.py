@@ -22,7 +22,7 @@ from app112.views import pageNotFound
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('app112/', include(('app112.urls', 'app112'), namespace='app112'))  # подключение всех app112.urls к url 'app112/'
+    path('app112/', include('app112.urls', namespace='app112'))  # подключение всех app112.urls к url 'app112/'
 ]
 
 handler404 = pageNotFound

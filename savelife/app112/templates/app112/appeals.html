@@ -3,7 +3,44 @@
  (ofr, if-else, empty)-->
 <!-- 7. б)Создать шаблон для детал отображ данных происшествий -->
 <!-- 10. Изменить шаблон списка обращений -->
+
 {% block content %}
+<div align="center">
+    <h2>Поиск</h2>
+        <form method="GET">
+            {% csrf_token %}
+            {{ filter.form.as_p }}
+            <button type="submit">Найти</button>
+        </form>
+    <hr>
+    {% if filter.qs.count > 1 %}
+        <h1>Список обращений</h1>
+    {% else %}
+        <h1>Результат поиска</h1>
+    {% endif %}
+    <p>Всего обращений: {{filter.qs|length}}</p>
+    {% for obj in filter.qs %}
+        <div>
+            <hr>
+            <h3>Номер обращения: {{obj.number}}</h3>
+            <p>Дата: {{obj.date|date:"d.m.Y"}}</p>
+            <p>Время: {{obj.date|time}}</p>
+            <p>С момента создания прошло: {{obj.date|timesince}}</p>
+            <p>Статус: {{obj.status}}</p>
+            <p>Не звонить: {{obj.id_inc.dontCall|yesno}}</p>
+            <p>Список служб:
+                {% for i in obj.service.all %}
+                    {{i|join:', '|upper}}
+                {% empty %}
+                    Отсутствуют
+                {% endfor %}
+            </p>
+            <p><a href="{% url 'app112:edit_appeal' obj.id %}">Редактировать</a></p>
+        </div>
+    {% endfor %}
+    </div>
+<hr>
+<!--
 <h1>Список обращений</h1>
 {% for appeal in data_appeals %}
 <div>

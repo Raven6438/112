@@ -44,10 +44,10 @@
 4. Получ. последнние 5 "Заявителей"
 	Applicant.objects.all().reverse()[:5]
 5. Получ. самое старое и самое новое обращение 2 способ (latest, earliest, order_by)
-	Appeal.objects.latest('date') - самое новое обращение
-	Appeal.objects.earliest('date') - самое старое обращение
-	Appeal.objects.order_by('date').first() самое старое обращение
-	Appeal.objects.order_by('date').last() - самое новое обращение
+	Appeal.objects.latest('date')           - самое новое обращение
+	Appeal.objects.earliest('date')         - самое старое обращение
+	Appeal.objects.order_by('date').first() - самое старое обращение
+	Appeal.objects.order_by('date').last()  - самое новое обращение
 6. Получ. каждое 2 обращение
 	Appeal.objects.all()[::2]
 7. Если дважды проитерироваться по по полученному Queryset'у, то сколько будет сделано обращений в БД?
@@ -88,11 +88,15 @@
 3. Отсортировать всех заявителей по id 
 	Applicant.objects.order_by('id')
 4. Получ. всех несовершеннолетних заявителей
-	Applicant.objects.filter(birthday__gte=datetime.utcnow() - timedelta(weeks=936))
+    from django.utils import timezone
+    from datetime import timedelta
+	Applicant.objects.filter(birthday__gte=timezone.now() - timedelta(weeks=936))
 5. Получить всех совершеннолетних заявителей
-	Applicant.objects.filter(birthday__lte=datetime.utcnow() - timedelta(weeks=936))
+    from django.utils import timezone
+    from datetime import timedelta
+	Applicant.objects.filter(birthday__lte=timezone.now() - timedelta(weeks=936))
 
-6. Узнать, есть ли вообще какие-либо заявители? Наприме, у которых состояние здоровья НЕ "Практически здоров"
+6. Узнать, есть ли вообще какие-либо заявители? Например, у которых состояние здоровья НЕ "Практически здоров"
 	Applicant.objects.exclude(descr_state_health = 'Практически здоров').exists()
 7. Узнать, есть ли заявители с похожими именами (например, Евгений и Евгения)
 	Applicant.objects.filter(name__startswith='Евге')
@@ -103,6 +107,7 @@
 10. Получ. все обращения, созданные до опред. даты
 	Appeal.objects.filter(date__lte=datetime.date(2022, 10, 21))
 11. Получ. всех заявителей без фото или/и без телефона
+    from django.db.models import Q
 	Applicant.objects.filter(Q(photo='') | Q(phone__isnull=True))
 12. Получ. всех заявителей с определ. кодом оператора 917
 	Applicant.objects.filter(phone__contains=917)
@@ -138,10 +143,18 @@
 	for i in objs
 	    i.descr_state_health = 'Полностью здоров'
 	Applicant.objects.bulk_update(objs, ['descr_state_health'])
-25. Вывести имя заявителя у которого какое либо обращение в один запрос (Оптизация запросов)
-	Appeal.objects.get(pk=2).applicant
+
+25. Вывести имя заявителя у которого какое-либо обращение в один запрос (Оптизация запросов)
+	 Appeal.objects.select_related("applicant").order_by('?').first().applicant.name
+
 26. Вывести список обращений с указанием задействованных служб в формате (№ обращ, список кодов служб).
     Не более 2 запросов (Переделать с оптимизацией запросов)
+
+    appeals = []
+    for appeal in Appeal.objects.prefetch_related('service'):
+        codes = [service.service_code for service in appeal.service.all()]
+        appeals.append({'appeal': appeal.number, 'codes':codes})
+    appeals
 
 27. Вывести все значения дат создания происшествий(Обращений). Даты добавить в список
 	Appeal.objects.values_list('date')
