@@ -13,54 +13,23 @@
             <button type="submit">Найти</button>
         </form>
     <hr>
-    {% if filter.qs.count > 1 %}
-        <h1>Список обращений</h1>
-    {% else %}
-        <h1>Результат поиска</h1>
-    {% endif %}
-    <p>Всего обращений: {{filter.qs|length}}</p>
-    {% for obj in filter.qs %}
+    {% if filter.qs.count > 1 %}<h1>Список обращений</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
+    <h3>Всего обращений: {{filter.qs|length}}</h3>
+    {% for appeal in filter.qs %}
         <div>
             <hr>
-            <h3>Номер обращения: {{obj.number}}</h3>
-            <p>Дата: {{obj.date|date:"d.m.Y"}}</p>
-            <p>Время: {{obj.date|time}}</p>
-            <p>С момента создания прошло: {{obj.date|timesince}}</p>
-            <p>Статус: {{obj.status}}</p>
-            <p>Не звонить: {{obj.id_inc.dontCall|yesno}}</p>
-            <p>Список служб:
-                {% for i in obj.service.all %}
-                    {{i|join:', '|upper}}
-                {% empty %}
-                    Отсутствуют
-                {% endfor %}
+            <h3>Номер обращения: {{appeal.number}}</h3>
+            <p><b>Тип происшествия: </b> {{ appeal.incidents }} </p>
+            <p><b>Дата:</b> {{appeal.date|date:"d.m.Y"}}</p>
+            <p><b>Время:</b> {{appeal.date|time}}</p>
+            <p><b>С момента создания прошло:</b> {{appeal.date|timesince}}</p>
+            <p><b>Статус:</b> {{appeal.status}}</p>
+            <p><b>Не звонить:</b> {{appeal.id_inc.dontCall|yesno}}</p>
+            <p><b>Список служб:</b>
+                {% if appeal.service.all %} {{appeal.service.all|join:", "|upper}} {% else %} ОТСУТСТВУЮТ {% endif %}
             </p>
-            <p><a href="{% url 'app112:edit_appeal' obj.id %}">Редактировать</a></p>
+            <p><a href="{% url 'app112:edit_appeal' appeal.id %}">Редактировать</a></p>
         </div>
     {% endfor %}
     </div>
-<hr>
-<!--
-<h1>Список обращений</h1>
-{% for appeal in data_appeals %}
-<div>
-    <hr>
-    <h3>Номер обращения: {{appeal.number}}</h3>
-    <p>Дата: {{appeal.date|date:"d.m.Y"}}</p>
-    <p>Время: {{appeal.date|time}}</p>
-    <p>С момента создания прошло: {{appeal.date|timesince}}</p>
-    <p>Статус: {{appeal.status}}</p>
-    <p>Не звонить: {{appeal.id_inc.dontCall|yesno}}</p>
-    <p>Список служб:
-        {% for i in appeal.service.all %}
-            {{i|join:', '|upper}}
-        {% empty %}
-            Отсутствуют
-        {% endfor %}
-    </p>
-    <p><a href="{% url 'app112:edit_appeal' appeal.id %}">Редактировать</a></p>
-</div>
-{% endfor %}
-<hr>
-<p>Всего обращений: {{data_appeals|length}}</p>
 {% endblock %}

@@ -18,11 +18,7 @@ class AppealFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(label='Имя', field_name='applicant__name', lookup_expr='icontains')
     patronymic = django_filters.CharFilter(label='Отчество', field_name='applicant__patronymic',
                                            lookup_expr='icontains')
-    service = django_filters.CharFilter(label='Код службы', field_name='service', method='func')
-
-    def func(self, service):
-        value = get_object_or_404(EmergencyService, service_code=service)
-        return value.id
+    service = django_filters.CharFilter(label='Код службы', field_name='service')
 
     class Meta:
         model = models.Appeal

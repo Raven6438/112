@@ -19,15 +19,8 @@ def for_base_temp(request):
 class Appeals(FilterView, ListView):
     model = models.Appeal
     template_name = 'app112/appeals.html'
-    #context_object_name = 'data_appeals'
     extra_context = {'title': 'Обращения'}
     filterset_class = AppealFilter
-
-
-"""def appeals(request):
-    data_appeals = appeal.objects.all()
-    return render(request, 'app112/appeals.html', {'data_appeals': data_appeals, 'title': 'Обращения', 'date': datetime.utcnow()})
-"""
 
 
 # Данные о заявителе с определ ID
@@ -40,7 +33,6 @@ def get_applicants(request):
     applicants = Applicant.objects.order_by('id').all()
     f = ApplicantFilter(request.GET, queryset=applicants)
     context = {
-        #'applicants': applicants,
         'title': 'Все заявители',
         'filter': f
     }
@@ -102,25 +94,6 @@ class EditApplicant(UpdateView):
     extra_context = {'title': 'Редактирование заявителя'}
 
 
-"""
-def edit_applicant(request, pk):
-    applicant = get_object_or_404(Applicant, pk=pk)
-    if request.method == 'POST':
-        form = FormApplicant(request.POST, instance=applicant)
-        if form.is_valid():
-            form.save()
-            return redirect('app112:get_applicant', pk=pk)
-    else:
-        form = FormApplicant(instance=applicant)
-
-    context = {
-        'title': 'Редактирование заявителя',
-        'form': form,
-        'pk': pk
-    }
-    return render(request, 'app112/edit_applicant.html', context=context)
-"""
-
 
 def edit_appeal(request, pk):
     appeal = get_object_or_404(Appeal, pk=pk)
@@ -128,7 +101,7 @@ def edit_appeal(request, pk):
         form = FormAppeal(request.POST, instance=appeal)
         if form.is_valid():
             form.save()
-            return redirect('app112:get_appeal', pk=pk)
+            return redirect('app112:appeals')
     else:
         form = FormAppeal(instance=appeal)
 
@@ -166,6 +139,7 @@ def get_applicant_by_phone(request):
 def data_json(request, pk):
     applicant = get_object_or_404(Applicant, id=pk)
     result = model_to_dict(applicant)
+    result['photo'] = str(result['photo'])
     return JsonResponse(result, json_dumps_params={'ensure_ascii': False})
 
 
