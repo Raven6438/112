@@ -1,10 +1,47 @@
 {% extends 'app112/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
-<form action="{% url 'app112:create_appeal' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Добавить</button>
-</form>
+<div class="row justify-content-center border rounded ">
+    <h1>{{title}}</h1>
+    <form action="{% url 'app112:create_appeal' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            {{ form.incidents.label }}
+            <div>
+                {{ form.incidents }}
+            </div>
+        </div>
+        <hr>
+        <div>
+            {{ form.status.label }}
+            <div>
+                {{ form.status }}
+            </div>
+        </div>
+        <hr>
+        <div>
+            {{ form.count_injured.label }}
+            <div>
+                {{ form.count_injured }}
+            </div>
+        </div>
+        <hr>
+        <div>
+            {{ form.dontCall.label }}
+            {{ form.dontCall }}
+        </div>
+        <hr>
+        <div>
+            {{ form.applicant.label }}
+            {{ form.applicant }}
+        </div>
+        <hr>
+        <div>
+            {{ form.service.label }}
+            {{ form.service }}
+        </div>
+        <hr>
+        <div class="d-grid mb-3"> <button class="btn btn-primary btn-lg" type="submit">Создать</button> </div>
+    </form>
+</div>
 {% endblock %}

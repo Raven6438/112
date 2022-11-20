@@ -1,5 +1,6 @@
 from django.urls import path, register_converter
 
+from .classviews import Appeals, CreateApplicant, EditApplicant
 from .views import *
 
 

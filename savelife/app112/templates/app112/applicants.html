@@ -1,25 +1,50 @@
 {% extends 'app112/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 <!-- 3. Вывести список всех пользователей (for)-->
 <!-- 5. Пронумеровать список заявителей, визуально выделить первую и последнюю записи -->
 {% block content %}
-<div align="center">
-    <h2>Поиск</h2>
+<div class="row justify-content-center border rounded">
         <form method="GET">
             {% csrf_token %}
-            {{ filter.form.as_p }}
-            <button type="submit">Найти</button>
+                <h2>Поиск</h2>
+                <div class="col">
+                    {{ filter.form.fullname|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ filter.form.birthday|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ filter.form.phone|as_crispy_field }}
+                </div>
+            <hr>
+            <div class="d-grid mb-3"><button class="btn btn-success" type="submit">Найти</button></div>
         </form>
-    <hr>
-        {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
-        {% for obj in filter.qs %}
-            <h2>ID заявителя:</b> {{obj.id}}</h2>
-            <p><b>Фамилия:</b> {{obj.surname}}</p>
-            <p><b>Имя:</b> {{obj.name}}</p>
-            <p><a href="{% url 'app112:get_applicant' obj.pk %}">Подробнее...</a></p>
+</div>
+<!-- <div class="row justify-content-center">
+    {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
+        {% for applicant in filter.qs %}
+        <div class="card" style="width: 20rem;">
+            <img src="{{form.photo.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="display-6">ID заявителя: {{applicant.id}}</p>
+                <p><b>Фамилия:</b> {{applicant.surname}}</p>
+                <p><b>Имя:</b> {{applicant.name}}</p>
+                <p><a href="{% url 'app112:get_applicant' applicant.pk %}">Подробнее...</a></p>
+                <hr>
+            </div>
+        </div>
+        {% endfor %}
+</div> -->
+<hr>
+    {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
+        {% for applicant in filter.qs %}
+            <p class="display-6">ID заявителя:</b> {{applicant.id}}</p>
+            <p><b>Фамилия:</b> {{applicant.surname}}</p>
+            <p><b>Имя:</b> {{applicant.name}}</p>
+            <p><a href="{% url 'app112:get_applicant' applicant.pk %}">Подробнее...</a></p>
             <hr>
         {% empty %}
             <h3>Ничего не найдено</h3>
         {% endfor %}
-    </div>
-<hr>
 {% endblock %}

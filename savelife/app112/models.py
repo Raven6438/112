@@ -61,8 +61,8 @@ class Appeal(models.Model):
 
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, related_name='appeals',
                                   verbose_name='Заявитель')
-    service = models.ManyToManyField(EmergencyService, related_name='appeals',  # без id
-                                     verbose_name='ID сервиса', blank=True)
+    service = models.ManyToManyField(EmergencyService, related_name='appeals',
+                                     verbose_name='Сервис', blank=True)
 
     def __str__(self):
         return str(self.number)

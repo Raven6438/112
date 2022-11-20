@@ -11,7 +11,7 @@ class FormApplicant(forms.ModelForm):  # CreateApplicant
         model = Applicant
         fields = '__all__'
         widgets = {
-            'descr_state_health': forms.Textarea()
+            'descr_state_health': forms.Textarea(attrs={"cols":"55", "rows":"5"})
         }
 
     def clean_birthday(self):
@@ -36,7 +36,7 @@ class FormAppeal(forms.ModelForm):
         model = Appeal
         fields = '__all__'
         widgets = {
-            'service': forms.CheckboxSelectMultiple()
+            'service': forms.CheckboxSelectMultiple(),
         }
 
 
