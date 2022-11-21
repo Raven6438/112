@@ -9,6 +9,19 @@ class ApplicantFilter(django_filters.FilterSet):
     phone = django_filters.NumberFilter()
     birthday = django_filters.DateFilter()
 
+    class Meta:
+        model = models.Applicant
+        fields = ('fullname', 'phone', 'birthday')
+
+
+class AppealFilter(django_filters.FilterSet):
+    fullname = django_filters.CharFilter(label='ФИО', method='fullname_search')
+    service = django_filters.CharFilter(label='Код службы', field_name='service')
+    status = django_filters.ChoiceFilter(label='Статус', field_name='status')
+    class Meta:
+        model = models.Appeal
+        fields = ('service', 'status')
+
     def fullname_search(self, queryset, field: str, value) -> QuerySet:
         fio_list = value.split()
 
@@ -26,19 +39,3 @@ class ApplicantFilter(django_filters.FilterSet):
             )
         else:
             return queryset.none()
-
-    class Meta:
-        model = models.Applicant
-        fields = ('fullname', 'phone', 'birthday')
-
-
-class AppealFilter(django_filters.FilterSet):
-    surname = django_filters.CharFilter(label='Фамилия', field_name='applicant__surname', lookup_expr='icontains')
-    name = django_filters.CharFilter(label='Имя', field_name='applicant__name', lookup_expr='icontains')
-    patronymic = django_filters.CharFilter(label='Отчество', field_name='applicant__patronymic',
-                                           lookup_expr='icontains')
-    service = django_filters.CharFilter(label='Код службы', field_name='service')
-
-    class Meta:
-        model = models.Appeal
-        fields = ('service', 'status')
