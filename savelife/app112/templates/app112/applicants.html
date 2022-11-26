@@ -4,7 +4,7 @@
 <!-- 3. Вывести список всех пользователей (for)-->
 <!-- 5. Пронумеровать список заявителей, визуально выделить первую и последнюю записи -->
 {% block content %}
-<div class="row justify-content-center border rounded">
+<div class="row justify-content-center border rounded bg-light bg-gradient">
         <form method="GET">
             {% csrf_token %}
                 <h2>Поиск</h2>
@@ -21,6 +21,21 @@
             <div class="d-grid mb-3"><button class="btn btn-success" type="submit">Найти</button></div>
         </form>
 </div>
+<br>
+    {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
+    <hr>
+        {% for applicant in filter.qs %}
+            <p class="display-6">ID заявителя:</b> {{applicant.id}}</p>
+            <p><b>Фамилия:</b> {{applicant.surname}}</p>
+            <p><b>Имя:</b> {{applicant.name}}</p>
+            <p><a href="{% url 'app112:get_applicant' applicant.pk %}">Подробнее...</a></p>
+            <hr>
+        {% empty %}
+            <h3>Ничего не найдено</h3>
+        {% endfor %}
+{% endblock %}
+
+
 <!-- <div class="row justify-content-center">
     {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
         {% for applicant in filter.qs %}
@@ -36,15 +51,3 @@
         </div>
         {% endfor %}
 </div> -->
-<hr>
-    {% if filter.qs.count > 1 %}<h1>Список заявителей</h1>{% else %}<h1>Результат поиска</h1>{% endif %}
-        {% for applicant in filter.qs %}
-            <p class="display-6">ID заявителя:</b> {{applicant.id}}</p>
-            <p><b>Фамилия:</b> {{applicant.surname}}</p>
-            <p><b>Имя:</b> {{applicant.name}}</p>
-            <p><a href="{% url 'app112:get_applicant' applicant.pk %}">Подробнее...</a></p>
-            <hr>
-        {% empty %}
-            <h3>Ничего не найдено</h3>
-        {% endfor %}
-{% endblock %}
