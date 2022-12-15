@@ -8,6 +8,7 @@ STATUS_CHOICE = (
         ('completed', 'Завершено')
     )
 
+# Переделать как с status_choice
 TRAFFIC_ACCIDENT = 'ДТП'
 THEFT = 'Кража'
 ATTACK = 'Нападение'

@@ -2,16 +2,16 @@
 <!-- 7. а)Созд шабл для детал отображ данных заявителя -->
 <!-- 8. Измен шаблон отображ данных заяв -->
 {% block content %}
-<div class="row justify-content-center border rounded">
-<h1 class="display-6"> Данные о заявителе: ID {{applicant.id}}</h1>
-<hr>
-<p><b>Фамилия:</b> {{applicant.surname|lower|capfirst}}</p>
-<p><b>Имя:</b> {{applicant.name|lower|capfirst}}</p>
-<p><b>Отчество:</b> {{applicant.patronymic|lower|capfirst|default:'-'}}</p>
-<p><b>Пол:</b> {{applicant.gender|capfirst}}</p>
-<p><b>День рождения:</b> {{applicant.birthday|date|default:'-'}}</p>
-<p><b>Телефон:</b> {{applicant.phone|default:'-'}}</p>
-<hr>
-<p class="d-grid"><a class="btn btn-primary" href="{% url 'app112:edit_applicant' applicant.id %}">Редактировать</a></p>
+<div class="row justify-content-center border rounded bg-gradient" style="background-color: #e9ecef">
+    <h1 class="display-6"> Заявитель: ID {{applicant.id}}</h1>
+    <hr>
+    <p><b>Фамилия:</b> {{applicant.surname|lower|capfirst}}</p>
+    <p><b>Имя:</b> {{applicant.name|lower|capfirst}}</p>
+    <p><b>Отчество:</b> {{applicant.patronymic|lower|capfirst|default:'-'}}</p>
+    <p><b>Пол:</b> {{applicant.gender|capfirst}}</p>
+    <p><b>День рождения:</b> {{applicant.birthday|date|default:'-'}}</p>
+    <p><b>Телефон:</b> {{applicant.phone|default:'-'}}</p>
+    <hr>
+    <p class="d-grid"><a class="btn btn-primary" href="{% url 'app112:edit_applicant' applicant.id %}">Редактировать</a></p>
 </div>
 {% endblock %}

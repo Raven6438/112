@@ -12,6 +12,9 @@ class Appeals(FilterView, ListView):
     extra_context = {'title': 'Обращения'}
     filterset_class = AppealFilter
 
+    def get_queryset(self):
+        return self.model.objects.order_by('-date')
+
 
 class CreateApplicant(CreateView):
     form_class = FormApplicant

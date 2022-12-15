@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row justify-content-center border rounded ">
+<div class="row justify-content-center border rounded bg-gradient" style="background-color: #e9ecef">
     <h1>{{title}}</h1>
     <form action="{% url 'app112:create_applicant' %}" method="POST">
         {% csrf_token %}
@@ -20,16 +20,15 @@
         <hr>
         <div class="row">
             <div class="col"> {{ form.birthday|as_crispy_field }} </div>
-
+            <div class="col"> {{ form.phone|as_crispy_field }} </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col"> {{ form.phone|as_crispy_field }} </div>
             <div class="col"> {{ form.photo|as_crispy_field }} </div>
         </div>
         <hr>
             {{ form.descr_state_health|as_crispy_field }}
-        <div class="d-grid"> <button class="btn btn-primary btn-lg" type="submit">Создать</button> </div>
+        <div class="d-grid mb-3"> <button class="btn btn-primary btn-lg" type="submit">Создать</button> </div>
     </form>
 </div>
 {% endblock %}

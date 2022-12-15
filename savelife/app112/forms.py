@@ -31,12 +31,14 @@ class FormAppeal(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['applicant'].empty_label = "Не выбран"
+        self.fields['incidents'].empty_label = "Не выбран"
 
     class Meta:
         model = Appeal
         fields = '__all__'
         widgets = {
             'service': forms.CheckboxSelectMultiple(),
+            'dontCall': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
 
 

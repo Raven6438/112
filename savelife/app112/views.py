@@ -17,11 +17,12 @@ def get_applicant(request, pk):
 
 
 def get_applicants(request):
-    applicants = models.Applicant.objects.order_by('id').all()
+    applicants = models.Applicant.objects.order_by('-id').all()
     filter = filters.ApplicantFilter(request.GET, queryset=applicants)
     context = {
         'title': 'Все заявители',
-        'filter': filter
+        'filter': filter,
+        'applicant_count': len(applicants)
     }
     return render(request, 'app112/applicants.html', context=context)
 
@@ -93,7 +94,10 @@ def redir(request):
 
 
 def redir2(request):
-    return HttpResponse('<h1>Перенаправление с /redirect/ на /redirect2/</h1>')
+    return HttpResponse('<h1><a href="http://127.0.0.1:8000/redirect/">http://127.0.0.1:8000/redirect/</a> '
+                        '- недоступен.<hr>Выбыли перенаправлены на: '
+                        '<a href="http://127.0.0.1:8000/redirect2/">http://127.0.0.1:8000/redirect2/</a></h1>'
+                        '<a href="http://127.0.0.1:8000/">Назад</a>')
 
 
 def get_service(request, pk):

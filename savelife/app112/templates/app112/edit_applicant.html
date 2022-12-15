@@ -1,10 +1,35 @@
 {% extends 'app112/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<h1>{{title}}</h1>
-<form action="{% url 'app112:edit_applicant' applicant.pk %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+<div class="row justify-content-center border rounded bg-gradient" style="background-color: #e9ecef">
+    <h1>{{title}}</h1><hr>
+    <form action="{% url 'app112:edit_applicant' applicant.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                {{ form.surname|as_crispy_field }}
+            </div>
+            <div class="col">
+                {{ form.name|as_crispy_field }}
+            </div>
+        </div>
+
+        {{ form.patronymic|as_crispy_field }}
+        <hr>
+        <div class="row">
+            <div class="col"> {{ form.birthday|as_crispy_field }} </div>
+            <div class="col"> {{ form.phone|as_crispy_field }} </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col"> {{ form.photo|as_crispy_field }} </div>
+        </div>
+        <hr>
+            {{ form.descr_state_health|as_crispy_field }}
+        <hr>
+        <div class="d-grid mb-3"> <button class="btn btn-success btn-lg" type="submit">Сохранить</button> </div>
+    </form>
+</div>
 {% endblock %}

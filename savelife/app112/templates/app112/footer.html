@@ -1,7 +1,9 @@
 <!-- 6. Создать footer шаблон, отражающий тек дату и вкл его в другие шаблоны (include) -->
-<footer>
-    <hr color="black">
-    <div>
-        <p>Текущая дата: {% now "j F Y H:i" %}</p>
+<footer class="bg-dark">
+    <hr>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <p class="text-light">Сейчас: {% now "j F Y, H:i" %}</p>
+        </div>
     </div>
 </footer>
