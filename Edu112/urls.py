@@ -1,4 +1,4 @@
-"""savelife URL Configuration
+"""Edu112 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from savelife import settings
+from Edu112 import settings
 from app112.views import page_not_found
 
 urlpatterns = [
