@@ -1,5 +1,5 @@
 """
-ASGI config for savelife project.
+ASGI config for Edu112 project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'savelife.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Edu112.settings')
 
 application = get_asgi_application()
