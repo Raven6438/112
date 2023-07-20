@@ -2,13 +2,8 @@ from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from . import filters
 from . import forms
 from . import models
-
-
-def for_base_temp(request):
-    return render(request, 'app112/base.html', {'title': 'Главная страница'})
 
 
 def get_applicant(request, pk):
