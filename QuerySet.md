@@ -11,10 +11,10 @@
 	pers.save()
 
 2. Создать "Обращение" через менеджер запросов от объекта "Заявитель"
-	pers = Applicant.objects.get(name='Семен').first()
+	applicant = Applicant.objects.filter(name='Семен').first()
 	Result: <Applicant: Семен>
 	
-	pers.appeals.create(count_injured=2) 
+	applicant.appeals.create(count_injured=2) 
 	Result: <Appeal: e3ae18aa-59b8-48d1-981e-dbed56e7b65d>
 
 3. Доб. объекту "Обращения" несколько "Экстр. служб" с помощью add() и set().
@@ -62,7 +62,7 @@
 	Appeal.objects.all()[::2]
 	Result:
 
-7. Если дважды проитерироваться по по полученному Queryset'у, то сколько будет сделано обращений в БД?
+7. Если дважды проитерироваться по полученному Queryset'у, то сколько будет сделано обращений в БД?
     С помощью конструкции len(connection.queries) можно проверить кол-во запросов в БД.
     Для сброса испол. reset_queries() из django.db.
 
@@ -101,11 +101,12 @@
 	Result:
 
 2. Получ. всех заявителей по опред. полу и без обращ.
-	Applicant.objects.exclude(id__in=Appeal.objects.values('applicant_id', flat=True)).filter(gender='m')
+	Applicant.objects.exclude(id__in=Appeal.objects.filter(gender='m').values('applicant_id', flat=True))
 	Result:
 
 3. Отсортировать всех заявителей по id 
 	Applicant.objects.order_by('id')
+	Applicant.objects.order_by('-id')
 	Result:
 
 4. Получ. всех несовершеннолетних заявителей
@@ -122,10 +123,11 @@
 
 6. Узнать, есть ли вообще какие-либо заявители? Например, у которых состояние здоровья НЕ "Практически здоров"
 	Applicant.objects.exclude(descr_state_health = 'Практически здоров').exists()
+	Applicant.objects.filter(~Q(descr_state_health = 'Практически здоров')).exists()
 	Result:
 
 7. Узнать, есть ли заявители с похожими именами (например, Евгений и Евгения)
-	Applicant.objects.filter(name__startswith='Евге')
+	Applicant.objects.filter(name__startswith='Евгени')
 	Result:
 
 8. Получ. все обращения, кроме у которых нет назнач. служб
@@ -137,12 +139,13 @@
 	Result:
 
 10. Получ. все обращения, созданные до опред. даты
-	Appeal.objects.filter(date__lte=datetime.date(2022, 10, 21))
+	Appeal.objects.filter(date__lt=datetime.date(2022, 10, 21))
 	Result:
 
 11. Получ. всех заявителей без фото или/и без телефона
     from django.db.models import Q
-	Applicant.objects.filter(Q(photo='') | Q(phone__isnull=True))
+	Applicant.objects.filter(photo__isnull=True, phone__isnull=True)
+	Applicant.objects.filter(Q(photo__isnull=True) | Q(phone__isnull=True))
 	Result:
 
 12. Получ. всех заявителей с определ. кодом оператора 917
@@ -151,7 +154,7 @@
 
 13. Получ. результаты объедин., пересеч. и разницы двух предыдущих запросов.
     Не работаю с SQLite
-    Объединение - Applicant.objects.filter((Q(photo='') | Q(phone__isnull=True)) & Q(phone__contains=917))
+    Объединение - Applicant.objects.filter(Q(Q(photo='') | Q(phone__isnull=True)) & Q(phone__contains=917))
     Пересечение - Applicant.objects.filter(Q(photo='') | Q(phone__isnull=True) | Q(phone__contains=917))
 
 14. Вывести все обращения за опред период
@@ -189,72 +192,85 @@
             Пожарная служба
 
 
-21. Вывести или создать заявителя с номером тлф 12341234
-	Applicant.objects.get_or_create(phone=12341234)
-	Result: (<Applicant: Василий>, False)
+1. Вывести или создать заявителя с номером тлф 12341234
+   Applicant.objects.get_or_create(phone=12341234)
+   Result: (<Applicant: Василий>, False)
 
-22. Изменить номер тлф заявителя с номером тлф 12341234 на другой, если такого заявителя нет, то создать его
-	man = Applicant.objects.update_or_create(phone=12341234, defaults={'surname':'new', 'name': 'person'}) - второй параметр get_or_create
-	man[0].phone = 43214321
-	man[0].save()
+2. Изменить номер тлф заявителя с номером тлф 12341234 на другой, если такого заявителя нет, то создать его
+   man, _ = Applicant.objects.update_or_create(phone=12341234, defaults={'surname':'new', 'name': 'person', 'phone': 43214321})
 
-23. Создать сразу несколько заявителей
-	a = Applicant.objects.bulk_create([
-		Applicant(...),
-		Applicant(...)
-	])
-24. Изменить несколько заявителей: сост. здоровья на "полностью здоров"
-	objs = [Applicant.objects.get(pk=i) for i in range(1,3)] #id=1 id=2
-	for i in objs:
-	    i.descr_state_health = 'Полностью здоров'
-	Applicant.objects.bulk_update(objs, ['descr_state_health'])
-	Result: 2
+3. Создать сразу несколько заявителей
+   a = Applicant.objects.bulk_create([
+       Applicant(...),
+       Applicant(...)
+   ])
+4. Изменить несколько заявителей: сост. здоровья на "полностью здоров"
+   objs = [Applicant.objects.get(pk=i) for i in range(1,3)] #id=1 id=2
+   for i in objs:
+       i.descr_state_health = 'Полностью здоров'
+   Applicant.objects.bulk_update(objs, ['descr_state_health'])
+   Result: 2
 
-25. Вывести имя заявителя у которого какое-либо обращение в один запрос (Оптизация запросов)
-	 Appeal.objects.select_related("applicant").order_by('?').first().applicant.name
-	 Result: 'Евгения'
+5. Вывести имя заявителя у которого какое-либо обращение в один запрос (Оптизация запросов)
+    Appeal.objects.select_related("applicant").order_by('?').first().applicant.name
+    Result: 'Евгения'
 
-26. Вывести список обращений с указанием задействованных служб в формате (№ обращ, список кодов служб).
-    Не более 2 запросов (Переделать с оптимизацией запросов)
+6. Вывести список обращений с указанием задействованных служб в формате (№ обращ, список кодов служб).
+   Не более 2 запросов (Переделать с оптимизацией запросов)
 
-    appeals = []
-    for appeal in Appeal.objects.prefetch_related('service'):
-        codes = [service.service_code for service in appeal.service.all()]
-        appeals.append({'appeal': appeal.number, 'codes':codes})
-    appeals
-    Result: [{'appeal': UUID('e3ae18aa-59b8-48d1-981e-dbed56e7b65d'),
-  'codes': ['03', '01']}, ...]
-27. Вывести все значения дат создания происшествий(Обращений). Даты добавить в список
-	Appeal.objects.values_list('date')
-	Result: <QuerySet [(datetime.datetime(2022, 10, 26, 13, 39, 18, 750358, tzinfo=datetime.timezone.utc),), ...]>
+   appeals = []
+   for appeal in Appeal.objects.prefetch_related('service'):
+       codes = [service.service_code for service in appeal.service.all()]
+       appeals.append({'appeal': appeal.number, 'codes':codes})
+   appeals
+   Result: [{'appeal': UUID('e3ae18aa-59b8-48d1-981e-dbed56e7b65d'), 'codes': ['03', '01']}, ...]
+	
+7. Вывести все значения дат создания происшествий(Обращений). Даты добавить в список
+   Appeal.objects.values_list('date')
+   Result: <QuerySet [(datetime.datetime(2022, 10, 26, 13, 39, 18, 750358, tzinfo=datetime.timezone.utc),), ...]>
 
-28. Создать queryset, который всегда будет пустым
-	Appeal.objects.none()
-	Result: <QuerySet []>
+8. Создать queryset, который всегда будет пустым
+   Appeal.objects.none()
+   Result: <QuerySet []>
 
-29. Вывести среднее кол-во пострадавших в происшествиях (обращениях)
-	Appeal.objects.aggregate(models.Avg('count_injured'))
-	Result: {'count_injured__avg': 2.0}
+9. Вывести среднее кол-во пострадавших в происшествиях (обращениях)
+   Appeal.objects.aggregate(models.Avg('count_injured'))
+   Result: {'count_injured__avg': 2.0}
 
-30. Вывести общее кол-во пострадавших в происшествиях
-	Appeal.objects.aggregate(models.Sum('count_injured'))
-	Result: {'count_injured__sum': 14}
+10. Вывести общее кол-во пострадавших в происшествиях
+    Appeal.objects.aggregate(models.Sum('count_injured'))
+    Result: {'count_injured__sum': 14}
 
-31. Вывести кол-во вызванных служб для каждого происшествия
-	Appeal.objects.annotate(count=models.Count('service')).values('number', 'count')
-	Result: <QuerySet [{'number': UUID('7d7db990-fa82-4021-9576-b6e1c1ac27ed'), 'count': 2}, ...]>
+11. Вывести кол-во вызванных служб для каждого происшествия
+    Appeal.objects.annotate(count=models.Count('service')).values('number', 'count')
+    Result: <QuerySet [{'number': UUID('7d7db990-fa82-4021-9576-b6e1c1ac27ed'), 'count': 2}, ...]>
 
-32. Вывести среднее кол-во вызванных экстр служб
+12. Вывести среднее кол-во вызванных экстр служб
     EmergencyService.objects.annotate(count=models.Avg('appeals')).values('title', 'count')
     Result: <QuerySet [{'title': 'Полиция', 'count': 5.4}, {'title': 'Скорая помощь', 'count': 4.428571428571429}, {'title': 'Пожарная служба', 'count': 2.5}]>
 
-33. Вывести наиб и наим кол-во пострадавших
-	Appeal.objects.aggregate(models.Max('count_injured'), models.Min('count_injured'))
-	Result: {'count_injured__max': 5, 'count_injured__min': 1}
+13. Вывести наиб и наим кол-во пострадавших
+    Appeal.objects.aggregate(models.Max('count_injured'), models.Min('count_injured'))
+    Result: {'count_injured__max': 5, 'count_injured__min': 1}
 
-34. Сформировать запрос к модели заявитель, в котором будет добавлено поле с кол-вом обращений каждого заявителя
+14. Сформировать запрос к модели заявитель, в котором будет добавлено поле с кол-вом обращений каждого заявителя
     Applicant.objects.annotate(count_appeals=models.Count('appeals')).values('id', 'count_appeals')
     Result: <QuerySet [{'id': 1, 'count_appeals': 1}, {'id': 2, 'count_appeals': 2}, {'id': 3, 'count_appeals': 1}, {'id': 4, 'count_appeals': 1}, {'id': 5, 'count_ap
 peals': 1}, {'id': 10, 'count_appeals': 1}, {'id': 11, 'count_appeals': 0}, {'id': 12, 'count_appeals': 0}, {'id': 42, 'count_appeals': 1}, {'id': 43, 'count_appea
 ls': 0}]>
 
+15. Не подгружать некоторые поля, пока явно не обратишься к ним
+    Applicant.objects.defer('phone', 'photo')
+
+16. Немедленно загрузить некоторые поля (противоположность defer)
+	Applicant.objects.only('surname', 'name', 'descr_state_health')
+
+17. Найти всех заявителей у которых числа заявок строго больше 10
+	Applicant.objects.alias(appeals=Count('appeal')).filter(appeals__gt=10)
+
+18. Проверить наличие объекта заявителя в qs
+	joe = Applicant.objects.filter(name='Joe', age=18).first()
+	adult_applicants = Applicant.objects.filter(birthday__lte=timezone.now() - timedelta(weeks=936))
+	adult_applicant.contains(joe)
+
+19. Вывести словарь с тремя объектами Appeal, ключи которых числа от 1 до 3
