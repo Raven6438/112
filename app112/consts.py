@@ -1,11 +1,17 @@
+GENDER_MALE = 'Male'
+GENDER_FEMALE = 'Female'
+
 GENDER_CHOICE = (
-        ('m', 'Мужчина'),
-        ('w', 'Женщина')
+        (GENDER_MALE, 'Мужчина'),
+        (GENDER_FEMALE, 'Женщина')
     )
 
+STATUS_IN_WORK = 'In_work'
+STATUS_COMPLETED = 'Completed'
+
 STATUS_CHOICE = (
-        ('in work', 'В работе'),
-        ('completed', 'Завершено')
+        (STATUS_IN_WORK, 'В работе'),
+        (STATUS_COMPLETED, 'Завершено')
     )
 
 # Переделать как с status_choice
