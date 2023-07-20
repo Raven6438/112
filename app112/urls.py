@@ -1,5 +1,6 @@
 from django.urls import path, register_converter
 
+from . import classviews
 from .classviews import Appeals, CreateApplicant, EditApplicant
 from .views import *
 
@@ -20,7 +21,7 @@ app_name = 'app112'
 urlpatterns = [
     # Отображение всех записей
     path('', for_base_temp, name='home'),
-    path('applicants/', get_applicants, name='applicants'),
+    path('applicants/', classviews.Applicants.as_view(), name='applicants'),
     path('appeals/', Appeals.as_view(), name='appeals'),
     # Создание записей
     path('createApplicant/', CreateApplicant.as_view(), name='create_applicant'),

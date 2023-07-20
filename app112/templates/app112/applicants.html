@@ -9,16 +9,16 @@
         <form method="GET">
             {% csrf_token %}
             <h2 class="text-center">Поиск</h2>
-            <div>{{ filter.form.fullname|as_crispy_field }}</div>
-            <div>{{ filter.form.birthday|as_crispy_field }}</div>
-            <div>{{ filter.form.phone|as_crispy_field }}</div>
+            {{ filter.form.fullname|as_crispy_field }}
+            {{ filter.form.birthday|as_crispy_field }}
+            {{ filter.form.phone|as_crispy_field }}
             <hr>
             <div class="d-grid mb-3"><button class="btn btn-success" type="submit">Найти</button></div>
         </form>
 </div>
 <br><hr>
 <div class="text-center">
-    {% if filter.qs.count == applicant_count %}
+    {% if applicants.count == applicant_count %}
         <p class="h1">Список заявителей</p>
         <h3>Всего заявителей: {{filter.qs|length}}</h3>
     {% else %}
@@ -27,7 +27,7 @@
     {% endif %}
 </div>
 <br>
-{% for applicant in filter.qs %}
+{% for applicant in applicants %}
     <div class="row mb-4 border rounded bg-gradient" style="background-color: #e9ecef">
         <p class="display-6"> Заявитель: ID {{applicant.id}}</p>
         <hr>

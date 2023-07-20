@@ -16,18 +16,7 @@ def get_applicant(request, pk):
     return render(request, 'app112/applicant.html', {'applicant': applicant, 'title': 'Заявитель'})
 
 
-def get_applicants(request):
-    applicants = models.Applicant.objects.order_by('-id').all()
-    filter = filters.ApplicantFilter(request.GET, queryset=applicants)
-    context = {
-        'title': 'Все заявители',
-        'filter': filter,
-        'applicant_count': len(applicants)
-    }
-    return render(request, 'app112/applicants.html', context=context)
-
-
-def create_appeal(request):  # create_appeal
+def create_appeal(request):
     form = forms.FormAppeal(request.POST or None)
     if form.is_valid():
         form.save()
