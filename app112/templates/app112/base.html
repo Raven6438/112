@@ -33,29 +33,35 @@
                             <div class="vr bg-light"></div>
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Добавить
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="create">
-                                    <li><a class="dropdown-item" href="{% url 'app112:create_applicant' %}">Добавить заявителя</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'app112:create_appeal' %}">Добавить обращение</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'app112:create_service' %}">Добавить экстренную службу</a></li>
-                                </ul>
-
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Показать
+                                    Заявители
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="create">
                                     <li><a class="dropdown-item" href="{% url 'app112:applicants' %}">Все заявители</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'app112:appeals' %}">Все обращения</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'app112:create_applicant' %}">Добавить заявителя</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" title="С redirect2 на redirect" href="{% url 'app112:redirect' %}">
-                                    Перенаправление на /redirect
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Обращения
                                 </a>
+                                <ul class="dropdown-menu" aria-labelledby="create">
+                                    <li><a class="dropdown-item" href="{% url 'app112:appeals' %}">Все обращения</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'app112:create_appeal' %}">Добавить обращение</a></li>
+                                </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Экстренные службы
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="create">
+                                    <li><a class="dropdown-item" href="{% url 'app112:create_service' %}">Добавить экстренную службу</a></li>
+                                </ul>
+                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" title="С redirect2 на redirect" href="{% url 'app112:redirect' %}">
+                                        Перенаправление на /redirect
+                                    </a>
+                                </li>
                         </ul>
                     </div>
                 </div>
