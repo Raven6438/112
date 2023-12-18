@@ -12,7 +12,7 @@ urlpatterns = [
     path('appeals/', classviews.Appeals.as_view(), name='appeals'),
     # Создание записей
     path('applicant/create/', classviews.CreateApplicant.as_view(), name='create_applicant'),
-    path('appeal/create/', views.create_appeal, name='create_appeal'),
+    path('appeal/create/', classviews.CreateAppeal.as_view(), name='create_appeal'),
     path('service/create/', views.create_service, name='create_service'),
     # Редактирование записей
     path('applicant/update/<int:pk>/', classviews.UpdateApplicant.as_view(), name='edit_applicant'),

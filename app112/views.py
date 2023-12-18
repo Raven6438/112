@@ -5,19 +5,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from app112 import forms, models
 
 
-def create_appeal(request):
-    form = forms.FormAppeal(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('app112:appeals')
-
-    context = {
-        'title': 'Добавить обращение',
-        'form': form
-    }
-    return render(request, 'app112/create_appeal.html', context=context)
-
-
 def create_service(request):
     form = forms.FormService(request.POST or None)
     if form.is_valid():
