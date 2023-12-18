@@ -31,7 +31,7 @@
             <p><b>Дата обращения:</b> {{ appeal.date|date:"d.m.Y" }}</p>
             <p><b>Время обращения:</b> {{ appeal.date|time }}</p>
             <p><b>С момента происшествия прошло:</b> {{ appeal.date|timesince }}</p>
-            <p><b>Статус:</b> {{ appeal.status }}</p>
+            <p><b>Статус:</b> {{ appeal.get_status_display }}</p>
             <p><b>Не звонить:</b> {{ appeal.id_inc.dontCall|yesno }}</p>
             <p><b>Список служб:</b>
                 {% if appeal.service.all %} {{ appeal.service.all|join:", "|upper }} {% else %} Пусто {% endif %}
