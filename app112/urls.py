@@ -27,7 +27,7 @@ urlpatterns = [
     path('appeal/create/', views.create_appeal, name='create_appeal'),
     path('service/create/', views.create_service, name='create_service'),
     # Редактирование записей
-    path('applicant/update/<int:pk>/', classviews.EditApplicant.as_view(), name='edit_applicant'),
+    path('applicant/update/<int:pk>/', classviews.UpdateApplicant.as_view(), name='edit_applicant'),
     path('appeal/update/<int:pk>/', views.edit_appeal, name='edit_appeal'),
     path('service/update/<int:pk>/', views.edit_service, name='edit_service'),
     # Отображение записей по ID
