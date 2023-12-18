@@ -4,18 +4,6 @@ from django.views.generic import RedirectView
 from app112 import classviews, views
 
 
-class IDConverter:
-    regex = '[0-9]\d+'
-
-    def to_python(self, value):
-        return int(value)
-
-    def to_url(self, value):
-        return str(value)
-
-
-register_converter(IDConverter, 'id')
-
 app_name = 'app112'
 urlpatterns = [
     # Отображение всех записей
