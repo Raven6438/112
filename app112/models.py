@@ -2,9 +2,6 @@ from django.db import models
 import uuid
 from . import consts
 
-
-# Модель "Экстр Службы"
-# Название класса с большой буквы
 from django.urls import reverse
 
 
@@ -24,7 +21,6 @@ class EmergencyService(models.Model):
         verbose_name_plural = 'Экстренные службы'
 
 
-# Модель "Заявитель"
 class Applicant(models.Model):
     surname = models.CharField('Фамилия', max_length=255)
     name = models.CharField('Имя', max_length=255)
@@ -48,7 +44,6 @@ class Applicant(models.Model):
         ordering = ('surname', 'name', 'patronymic')
 
 
-# Модель "Обращение"
 class Appeal(models.Model):
     date = models.DateTimeField('Дата обращения', auto_now_add=True)
     number = models.UUIDField('Номер обращения', default=uuid.uuid4, unique=True, editable=False)
@@ -71,4 +66,3 @@ class Appeal(models.Model):
         verbose_name = 'Обращение'
         verbose_name_plural = 'Обращения'
         ordering = ('date', 'number')
-
