@@ -62,3 +62,10 @@ class UpdateApplicant(generic.UpdateView):
     template_name = 'app112/edit_applicant.html'
     extra_context = {'title': 'Редактирование заявителя'}
     context_object_name = 'applicant'
+
+
+class EmergencyService(generic.DetailView):
+    model = models.EmergencyService
+    template_name = 'app112/service.html'
+    context_object_name = 'service'
+    extra_context = {'title': 'Экстренная служба'}

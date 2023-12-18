@@ -65,14 +65,6 @@ def redir2(request):
                         '<a href="http://127.0.0.1:8000/">Назад</a>')
 
 
-def get_service(request, pk):
-    service = get_object_or_404(models.EmergencyService, id=pk)
-    context = {
-        'service': service
-    }
-    return render(request, 'app112/service.html', context=context)
-
-
 def get_applicant_by_phone(request):
     data = request.GET.get('phone')
     data_apl = get_object_or_404(models.Applicant, phone=data)
