@@ -2,17 +2,17 @@ GENDER_MALE = 'Male'
 GENDER_FEMALE = 'Female'
 
 GENDER_CHOICE = (
-        (GENDER_MALE, 'Мужчина'),
-        (GENDER_FEMALE, 'Женщина')
-    )
+    (GENDER_MALE, 'Мужчина'),
+    (GENDER_FEMALE, 'Женщина')
+)
 
 STATUS_IN_WORK = 'In_work'
 STATUS_COMPLETED = 'Completed'
 
 STATUS_CHOICE = (
-        (STATUS_IN_WORK, 'В работе'),
-        (STATUS_COMPLETED, 'Завершено')
-    )
+    (STATUS_IN_WORK, 'В работе'),
+    (STATUS_COMPLETED, 'Завершено')
+)
 
 INCIDENT_TRAFFIC_ACCIDENT = 'Traffic_accident'
 INCIDENT_THEFT = 'Theft'
