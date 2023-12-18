@@ -31,7 +31,7 @@ urlpatterns = [
     path('appeal/update/<int:pk>/', views.edit_appeal, name='edit_appeal'),
     path('service/update/<int:pk>/', views.edit_service, name='edit_service'),
     # Отображение записей по ID
-    path('applicant/<int:pk>/', views.get_applicant, name='get_applicant'),
+    path('applicant/<int:pk>/', classviews.Applicant.as_view(), name='get_applicant'),
     path('service/<int:pk>/', views.get_service, name='get_service'),
     # Отображение других данных
     path('applicant_by_phone/', views.get_applicant_by_phone, name='get_applicant_by_phone'),

@@ -6,11 +6,6 @@ from . import forms
 from . import models
 
 
-def get_applicant(request, pk):
-    applicant = get_object_or_404(models.Applicant, id=pk)
-    return render(request, 'app112/applicant.html', {'applicant': applicant, 'title': 'Заявитель'})
-
-
 def create_appeal(request):
     form = forms.FormAppeal(request.POST or None)
     if form.is_valid():

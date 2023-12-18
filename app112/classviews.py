@@ -36,6 +36,13 @@ class Applicants(generic.ListView):
         return filters.ApplicantFilter(self.request.GET)
 
 
+class Applicant(generic.DetailView):
+    model = models.Applicant
+    template_name = 'app112/applicant.html'
+    context_object_name = 'applicant'
+    extra_context = {'title': 'Заявитель'}
+
+
 class CreateApplicant(generic.CreateView):
     form_class = FormApplicant
     template_name = 'app112/create_applicant.html'
