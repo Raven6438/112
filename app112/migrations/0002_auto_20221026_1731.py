@@ -10,6 +10,7 @@ def add_service(apps, schema_editor):
         service.objects.create(title='Скорая помощь')
         service.objects.create(title='Пожарная служба')
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
