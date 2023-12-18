@@ -2,8 +2,7 @@ from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from . import forms
-from . import models
+from app112 import forms, models
 
 
 def create_appeal(request):
