@@ -24,6 +24,14 @@ class CreateAppeal(generic.CreateView):
     success_url = reverse_lazy('app112:home')
 
 
+class UpdateAppeal(generic.UpdateView):
+    model = models.Appeal
+    template_name = 'app112/edit_appeal.html'
+    form_class = forms.FormAppeal
+    extra_context = {'title': 'Редактирование обращения'}
+    success_url = reverse_lazy('app112:edit_appeal')
+
+
 class Applicants(generic.ListView):
     template_name = 'app112/applicants.html'
     context_object_name = 'applicants'
@@ -69,3 +77,11 @@ class EmergencyService(generic.DetailView):
     template_name = 'app112/service.html'
     context_object_name = 'service'
     extra_context = {'title': 'Экстренная служба'}
+
+
+class CreateEmergencyService(generic.CreateView):
+    model = models.EmergencyService
+    template_name = 'app112/create_service.html'
+    form_class = forms.FormService
+    success_url = reverse_lazy('app112:create_service')
+    extra_context = {'title': 'Добавить службу'}

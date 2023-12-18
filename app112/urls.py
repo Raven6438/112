@@ -13,10 +13,10 @@ urlpatterns = [
     # Создание записей
     path('applicant/create/', classviews.CreateApplicant.as_view(), name='create_applicant'),
     path('appeal/create/', classviews.CreateAppeal.as_view(), name='create_appeal'),
-    path('service/create/', views.create_service, name='create_service'),
+    path('service/create/', classviews.CreateEmergencyService.as_view(), name='create_service'),
     # Редактирование записей
     path('applicant/update/<int:pk>/', classviews.UpdateApplicant.as_view(), name='edit_applicant'),
-    path('appeal/update/<int:pk>/', views.edit_appeal, name='edit_appeal'),
+    path('appeal/update/<int:pk>/', classviews.UpdateAppeal.as_view(), name='edit_appeal'),
     path('service/update/<int:pk>/', views.edit_service, name='edit_service'),
     # Отображение записей по ID
     path('applicant/<int:pk>/', classviews.Applicant.as_view(), name='get_applicant'),

@@ -5,37 +5,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from app112 import forms, models
 
 
-def create_service(request):
-    form = forms.FormService(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('app112:home')
-
-    context = {
-        'title': 'Добавить службу',
-        'form': form
-    }
-    return render(request, 'app112/create_service.html', context=context)
-
-
-def edit_appeal(request, pk):
-    appeal = get_object_or_404(models.Appeal, pk=pk)
-    if request.method == 'POST':
-        form = forms.FormAppeal(request.POST, instance=appeal)
-        if form.is_valid():
-            form.save()
-            return redirect('app112:appeals')
-    else:
-        form = forms.FormAppeal(instance=appeal)
-
-    context = {
-        'title': 'Редактирование обращения',
-        'form': form,
-        'pk': pk
-    }
-    return render(request, 'app112/edit_appeal.html', context=context)
-
-
 def edit_service(request, pk):
     service = get_object_or_404(models.EmergencyService, pk=pk)
     if request.method == 'POST':
