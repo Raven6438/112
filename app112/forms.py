@@ -46,10 +46,15 @@ class FormAppeal(forms.ModelForm):
 
 
 class FormService(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['service_code'].help_text = 'Примечание: Код должен быть в виде двух цифр'
-
     class Meta:
         model = models.EmergencyService
         fields = '__all__'
+        help_texts = {
+            'service_code': 'Примечание: Код должен быть в виде двух цифр'
+        }
+
+    def clean_service_code(self) -> str:
+        service_code = self.cleaned_data.get('service_code')
+        if len(service_code) != 2:
+            raise ValidationError('Код службы должен быть в виде 2 цифр')
+        return service_code

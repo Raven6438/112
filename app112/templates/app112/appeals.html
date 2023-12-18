@@ -25,7 +25,7 @@
     <br>
     {% for appeal in filter.qs %}
         <div class="row justify-content-center border rounded bg-gradient" style="background-color: #e9ecef">
-            <h4>Номер обращения:<br> {{appeal.number}}</h4>
+            <h4>Обращения:<br> {{appeal.number}}</h4>
             <hr>
             <p><b>Тип происшествия: </b> {{ appeal.get_incidents_display }} </p>
             <p><b>Дата обращения:</b> {{ appeal.date|date:"d.m.Y" }}</p>
@@ -33,9 +33,16 @@
             <p><b>С момента происшествия прошло:</b> {{ appeal.date|timesince }}</p>
             <p><b>Статус:</b> {{ appeal.get_status_display }}</p>
             <p><b>Не звонить:</b> {{ appeal.id_inc.dontCall|yesno }}</p>
-            <p><b>Список служб:</b>
-                {% if appeal.service.all %} {{ appeal.service.all|join:", "|upper }} {% else %} Пусто {% endif %}
-            </p>
+            <div>
+                <b>Список служб:</b>
+                <ul>
+                    {% for service in appeal.service.all %}
+                        <li>{{ service|upper }}</li>
+                    {% empty %}
+                        Отсутствует
+                    {% endfor %}
+                </ul>
+            </div>
             <hr>
             <p class="d-grid"><a class="btn btn-success" href="{% url 'app112:edit_appeal' appeal.id %}">Редактировать</a></p>
         </div>
