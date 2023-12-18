@@ -46,10 +46,9 @@ class FormAppeal(forms.ModelForm):
 
 
 class FormService(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['service_code'].help_text = 'Примечание: Код должен быть в виде двух цифр'
-
     class Meta:
         model = models.EmergencyService
         fields = '__all__'
+        help_texts = {
+            'service_code': 'Примечание: Код должен быть в виде двух цифр'
+        }
