@@ -2,20 +2,24 @@
 
 {% block content %}
 <div class="container border rounded bg-gradient" style="background-color: #e9ecef">
-    <div align="center"><h1>{{title}}</h1></div>
+    <h1 align="center">{{title}}</h1>
     <div class="d-flex justify-content-center">
         <form action="{% url 'app112:create_service' %}" method="POST">
             {% csrf_token %}
-
-            {{ form.title.label }}
-            <div>{{ form.title }}</div>
-
-            {{ form.service_code.label }}
-            <div>{{ form.service_code }}</div>
-
-            {{ form.phone.label }}
-            <div>{{ form.phone }}</div>
-
+            <hr>
+            <div class="title">
+                {{ form.title.label }}
+                <div>{{ form.title }}</div>
+            </div>
+            <div class="service_code">
+                {{ form.service_code.label }}
+                <div>{{ form.service_code }}</div>
+                <div class="service_code__help_text help_text">{{ form.service_code.help_text }}</div>
+            </div>
+            <div class="phone">
+                {{ form.phone.label }}
+                <div>{{ form.phone }}</div>
+            </div>
             <hr>
             <div class="d-grid mb-2"> <button class="btn btn-primary btn-lg" type="submit">Создать</button></div>
         </form>
