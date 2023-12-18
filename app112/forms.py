@@ -52,3 +52,9 @@ class FormService(forms.ModelForm):
         help_texts = {
             'service_code': 'Примечание: Код должен быть в виде двух цифр'
         }
+
+    def clean_service_code(self) -> str:
+        service_code = self.cleaned_data.get('service_code')
+        if len(service_code) != 2:
+            raise ValidationError('Код службы должен быть в виде 2 цифр')
+        return service_code
