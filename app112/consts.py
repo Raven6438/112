@@ -14,7 +14,6 @@ STATUS_CHOICE = (
         (STATUS_COMPLETED, 'Завершено')
     )
 
-# Переделать как с status_choice
 TRAFFIC_ACCIDENT = 'ДТП'
 THEFT = 'Кража'
 ATTACK = 'Нападение'
