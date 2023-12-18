@@ -47,8 +47,8 @@ class Applicant(models.Model):
 class Appeal(models.Model):
     date = models.DateTimeField('Дата обращения', auto_now_add=True)
     number = models.UUIDField('Номер обращения', default=uuid.uuid4, unique=True, editable=False)
-    incidents = models.CharField('Тип происшествия', max_length=255, choices=consts.INCIDENT_CHOICES, default='Другое',
-                                 blank=True)
+    incidents = models.CharField('Тип происшествия', max_length=255, choices=consts.INCIDENT_CHOICES,
+                                 default=consts.INCIDENT_OTHER)
     status = models.CharField('Статус', max_length=255, choices=consts.STATUS_CHOICE, default='in work')
 
     count_injured = models.PositiveSmallIntegerField('Количество пострадавших', null=True, blank=True)

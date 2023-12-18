@@ -14,20 +14,20 @@ STATUS_CHOICE = (
         (STATUS_COMPLETED, 'Завершено')
     )
 
-TRAFFIC_ACCIDENT = 'ДТП'
-THEFT = 'Кража'
-ATTACK = 'Нападение'
-INJURY = 'Травма'
-FIRE = 'Пожар'
-THREAT_OF_TERRORISM = 'Угроза терроризма'
-OTHER = 'Другое'
+INCIDENT_TRAFFIC_ACCIDENT = 'Traffic_accident'
+INCIDENT_THEFT = 'Theft'
+INCIDENT_ATTACK = 'Attack'
+INCIDENT_INJURY = 'Injury'
+INCIDENT_FIRE = 'Fire'
+INCIDENT_THREAT_OF_TERRORISM = 'Threat_of_terrorism'
+INCIDENT_OTHER = 'Other'
 
 INCIDENT_CHOICES = (
-    (TRAFFIC_ACCIDENT, TRAFFIC_ACCIDENT),
-    (THEFT, THEFT),
-    (ATTACK, ATTACK),
-    (INJURY, INJURY),
-    (FIRE, FIRE),
-    (THREAT_OF_TERRORISM, THREAT_OF_TERRORISM),
-    (OTHER, OTHER)
+    (INCIDENT_TRAFFIC_ACCIDENT, 'ДТП (Дорожно-транспортное происшествие)'),
+    (INCIDENT_THEFT, 'Кража'),
+    (INCIDENT_ATTACK, 'Нападение'),
+    (INCIDENT_INJURY, 'Травма'),
+    (INCIDENT_FIRE, 'Пожар'),
+    (INCIDENT_THREAT_OF_TERRORISM, 'Угроза терроризма'),
+    (INCIDENT_OTHER, 'Другое')
 )
