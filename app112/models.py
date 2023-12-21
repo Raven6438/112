@@ -49,7 +49,7 @@ class Appeal(models.Model):
     number = models.UUIDField('Номер обращения', default=uuid.uuid4, unique=True, editable=False)
     incidents = models.CharField('Тип происшествия', max_length=255, choices=consts.INCIDENT_CHOICES,
                                  default=consts.INCIDENT_OTHER)
-    status = models.CharField('Статус', max_length=255, choices=consts.STATUS_CHOICE, default='in work')
+    status = models.CharField('Статус', max_length=255, choices=consts.STATUS_CHOICE, default=consts.STATUS_IN_WORK)
 
     count_injured = models.PositiveSmallIntegerField('Количество пострадавших', null=True, blank=True)
     dontCall = models.BooleanField('Не звонить', default=True)
