@@ -26,7 +26,7 @@ class Applicant(models.Model):
     name = models.CharField('Имя', max_length=255)
     patronymic = models.CharField('Отчество', max_length=255, blank=True)
     birthday = models.DateTimeField('День рождения', blank=True)
-    gender = models.CharField('Пол', max_length=255, choices=consts.GENDER_CHOICE, default=consts.GENDER_CHOICE[0])
+    gender = models.CharField('Пол', max_length=255, choices=consts.GENDER_CHOICE, default=consts.GENDER_MALE)
     photo = models.ImageField('Фотография', upload_to='photo/', default='/', blank=True)
     phone = models.PositiveBigIntegerField('Телефон', blank=True, null=True)
     descr_state_health = models.TextField('Описание состояния здоровья', blank=True, default='Практически здоров',
