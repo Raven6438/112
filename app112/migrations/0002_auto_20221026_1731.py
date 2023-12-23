@@ -18,5 +18,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(add_service)
+        migrations.RunPython(code=add_service, reverse_code=lambda a, s: 1)
     ]

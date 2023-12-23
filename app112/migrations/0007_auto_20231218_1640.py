@@ -30,4 +30,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(code=swap_rus_incident_const_to_eng_for_appeals, reverse_code=lambda a, s: 1)
     ]
