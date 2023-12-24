@@ -27,9 +27,10 @@ class CreateAppeal(generic.CreateView):
 class UpdateAppeal(generic.UpdateView):
     model = models.Appeal
     template_name = 'app112/edit_appeal.html'
+    context_object_name = 'appeal'
     form_class = forms.FormAppeal
     extra_context = {'title': 'Редактирование обращения'}
-    success_url = reverse_lazy('app112:edit_appeal')
+    success_url = reverse_lazy('app112:appeals')
 
 
 class Applicants(generic.ListView):

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="row justify-content-center border rounded bg-gradient" style="background-color: #e9ecef">
     <h1>{{title}}</h1>
-    <form action="{% url 'app112:create_appeal' %}" method="POST">
+    <form action="{% url 'app112:edit_appeal' pk=appeal.pk %}" method="POST">
         {% csrf_token %}
         <div>{{ form.incidents|as_crispy_field }}</div><hr>
         <div>{{ form.status|as_crispy_field }}</div><hr>
